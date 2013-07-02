@@ -12,13 +12,21 @@ class MySprite(sf.Sprite, Rectangle):
 		self.box = box(self)
 		self.children = []; self.children_class = children_class(self)
 
-	#The core positioning is handled by goto, as position is embedded within cython.
+	#Positioning is handled by goto instead of position.
+	#Position can't be overriden, but it needs to be for children.
 	@property
-	def goto(self): return self.position
+	def goto(self):
+		return self.position[0] - \
+				(self.origin[0] * self.scale[0]),\
+			   self.position[1] - \
+				(self.origin[1] * self.scale[1])
 	@goto.setter
 	def goto(self, args):
 		self.children_class.goto(args)
+		args = args[0] + self.origin[0],\
+			   args[1] + self.origin[1]
 		self.position = args
+	#
 
 	@property
 	def x(self): return self.goto[0]
@@ -103,11 +111,8 @@ class clip:
 			(ox+(w*x), oy+(h*y), w, h))
 
 
-class box(Rectangle):
-	def __init__ (self, mysprite): self._ = mysprite
 
-
-class children_class:
+class children_class: #PRIVATE
 #Sprites which are associated with the movements and actions of our parent sprite.
 	def __init__ (self, mysprite): self._ = mysprite
 
@@ -127,8 +132,56 @@ class children_class:
 		p = arg / self._.h
 		for s in self._.children:
 			s.h = p * s.h
-			
 	#
+
+class box(Rectangle):
+#Handles the sprite's proportional positioning.
+	def __init__ (self, mysprite):
+		self._ = mysprite
+		self.rect = None
+
+	#Box me! Centers the sprite within the box.
+	def me(self):
+		self._.center = self.center
+
+	#Centers sprite, and children, within a row/column.
+	def center_row(self, sprites=None):
+		if sprites == None:
+			sprites = self._.children
+
+		slab = self.w / float((len(sprites)+2))
+		self._.center = self.x + slab, self.center[1]
+
+		i = 2
+		for s in sprites:
+			s.center = self.x + (slab * i), self.center[1]
+			i += 1
+
+	def center_column(self, sprites=None):
+		if sprites == None:
+			sprites = self._.children
+
+		slab = self.h / float((len(sprites)+2))
+		self._.center = self.center[0], self.y + slab
+
+		i = 2
+		for s in sprites:
+			s.center = self.center[0], self.y + (slab * i)
+			i += 1
+	#
+
+	def draw(self):
+	#Draws a box for the sake of debugging.
+	#Drawn again every time there's a change.
+		def make_rect():
+			self.rect = sf.RectangleShape((self.w, self.h))
+			self.rect.position = self.goto
+			self.rect.fill_color = sf.Color.MAGENTA
+
+		if self.rect == None: make_rect()
+		if self.rect.size != self.size: make_rect()
+		if self.rect.position != self.goto: make_rect()
+		window.draw(self.rect)
 
 
 class animation:

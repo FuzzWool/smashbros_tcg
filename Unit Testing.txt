@@ -1,0 +1,18 @@
+Unit Testing
+============
+
+MySprite
+-
+	box
+	-
+		x Box, when drawn, creates a new image
+		x Rectangle positioning works
+		x Box centers anything in it
+		x Box centers multiple sprites by x, y
+			x Stress test, add a crazy ton amount
+			! Not entirely contained. Doesn't account for sprite width.
+
+	origin
+	-
+	x 1. Goto absolute regardless of origin
+		x 2. ...And size!

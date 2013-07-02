@@ -6,14 +6,14 @@ class Rectangle(object):
 	w, h = 0, 0
 
 	@property
-	def x(self): return self.position[0]
+	def x(self): return self.goto[0]
 	@x.setter
-	def x(self, arg): self.position[0] = arg
+	def x(self, x): self.goto = x, self.y
 
 	@property
-	def y(self): return self.position[1]
-	@x.setter
-	def y(self, arg): self.position[1] = arg
+	def y(self): return self.goto[1]
+	@y.setter
+	def y(self, y): self.goto = self.x, y
 
 	#
 
@@ -25,10 +25,10 @@ class Rectangle(object):
 		self.size = args[2:]
 
 	@property
-	def goto(self): return self.x, self.y
+	def goto(self): return self.position
 	@goto.setter
 	def goto(self, args):
-		self.x, self.y = args
+		self.position = args
 
 	@property
 	def size(self): return self.w, self.h
