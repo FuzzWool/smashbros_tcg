@@ -1,6 +1,19 @@
 Unit Testing
 ============
 
+0.0.11
+hand added to card_game
+
+Next...
+Create an 'event' where the opponent reveals their hand.
+Test this event with networking.
+
+	x Combine test1 and test2.
+	x Combine test1 with the network test.
+
+	Events are forwarded to each other via an event handler.
+	Opponent hand performs event.
+
 
 ***
 0.0.10
@@ -34,10 +47,6 @@ Hide the opponent's hand.
 			x Sizing
 	- Hand
 		x May flip cards in iteration
-
-Next...
-Create an 'event' where the opponent reveals their hand.
-Test this event with networking.
 
 ***
 0.0.9

@@ -15,7 +15,7 @@ ResizeWin(Width = 0,Height = 0)
 
 Insert::
 
-Run, %windir%\system32\cmd.exe /k "test1.py"
+Run, %windir%\system32\cmd.exe /k "test1.py --player 1"
 WinWait H:\WINDOWS\system32\cmd.exe
 WinMove A,, 0, 0
 
@@ -23,7 +23,7 @@ WinWait Super Smash Bros
 ResizeWin(600, 450)
 WinMove A,, 650, 0
 
-Run, %windir%\system32\cmd.exe /k "test1.py"
+Run, %windir%\system32\cmd.exe /k "test1.py --player 2"
 WinWait H:\WINDOWS\system32\cmd.exe
 WinMove A,, 0, 500
 
