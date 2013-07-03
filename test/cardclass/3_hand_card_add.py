@@ -54,8 +54,7 @@ while running:
 	#Logic
 	if mo.quit(): running = False
 	if rtrn.pressed():
-		for c in hand.cards:
-			c.flip()
+		hand.cards.append(mo.Card(5))
 
 	#Animation
 	#

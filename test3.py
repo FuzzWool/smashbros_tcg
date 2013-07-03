@@ -1,46 +1,43 @@
-#Goto is absolute regardless of origin/size
-
 import modules as mo
 rtrn = mo.KeyTracker(mo.sf.Keyboard.RETURN)
-a = mo.KeyTracker(mo.sf.Keyboard.A)
 
 tex = mo.sf.Texture.load_from_file("img/test/test.png")
 sprites = []
-for i in range(2):
+def add_sprite():
 	i = len(sprites)
 	sprite = mo.MySprite(tex)
 	sprite.clip.set(25, 25)
 	sprite.clip.use(i, 0)
-	sprite.origin = sprite.w/2, sprite.h/2###
-	if i == 0:
-		sprite.scale(2, 2)
-		sprite.goto = 200, 200
-	else:
-		sprite.goto = 200, 200
+	sprite.position = 100 + (i * 50), 100
 	sprites.append(sprite)
+
+for i in range(1):
+	add_sprite()
 
 sprites[0].children = sprites[1:]
 
-for s in sprites:
-#!!! - Absolute, so the 0th sprite has it's goto changed.
-	print s.goto, s.position
+###Box testing###
+box = sprites[0].box
+box.boundary = 100, 100, 600, 100
+sprites[0].box.center_row()
+###
 
 running = True
 while running:
 	#Logic
 	if mo.quit(): running = False
-	if rtrn.held():
-		sprites[0].w += 1
-		sprites[0].h += 1
+	if rtrn.pressed():
+		add_sprite()
+		sprites[0].children = sprites[1:]
+		sprites[0].box.center_row()
 
-	if a.pressed():
-	#!!! - Absolute, so resizing changes the goto.
-		for s in sprites:
-			print s.goto, s.size
+	#Animation
+	#
 
 	#Video
 	mo.window.clear(mo.sf.Color.WHITE)
 	#
+	sprites[0].box.draw()####
 	for s in sprites:
 		s.draw()
 	#

@@ -147,24 +147,22 @@ class box(Rectangle):
 	#Centers sprite, and children, within a row/column.
 	def center_row(self, sprites=None):
 		if sprites == None:
-			sprites = self._.children
+			sprites = []; sprites.append(self._)
+			for s in self._.children: sprites.append(s)
 
-		slab = self.w / float((len(sprites)+2))
-		self._.center = self.x + slab, self.center[1]
-
-		i = 2
+		slab = self.w / float((len(sprites)+1))
+		i = 1
 		for s in sprites:
 			s.center = self.x + (slab * i), self.center[1]
 			i += 1
 
 	def center_column(self, sprites=None):
 		if sprites == None:
-			sprites = self._.children
+			sprites = []; sprites.append(self._)
+			for s in self._.children: sprites.append(s)
 
-		slab = self.h / float((len(sprites)+2))
-		self._.center = self.center[0], self.y + slab
-
-		i = 2
+		slab = self.h / float((len(sprites)+1))
+		i = 1
 		for s in sprites:
 			s.center = self.center[0], self.y + (slab * i)
 			i += 1
@@ -175,7 +173,7 @@ class box(Rectangle):
 	#Drawn again every time there's a change.
 		def make_rect():
 			self.rect = sf.RectangleShape((self.w, self.h))
-			self.rect.position = self.goto
+			self.rect.position = self.x, self.y
 			self.rect.fill_color = sf.Color.MAGENTA
 
 		if self.rect == None: make_rect()

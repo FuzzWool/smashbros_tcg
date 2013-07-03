@@ -14,8 +14,10 @@ def make_sprite():
 for i in range(5):
 	make_sprite()
 
+#########################################################
 running = True
 while running:
+	
 	#Logic
 	if mo.quit(): running = False
 	if rtrn.pressed():

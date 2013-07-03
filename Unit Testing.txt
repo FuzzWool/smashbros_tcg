@@ -1,6 +1,48 @@
 Unit Testing
 ============
 
+
+***
+0.0.10
+Created CardLoader, Card, Hand
+Edited MySprite.box
+
+Adds CardLoader and Card - tackles redundant loading checks
+- CardTextures
+- Card
+	x 1. Adds an id to ids, but only when it is new.
+		! Uses a generator. May be slow in the future.
+			Test loading all images from a directory.
+			See if this works with a compiled .exe.
+	x 2. Finds the index, grabs a texture based on that index
+	x New cards requesting the same id do not reload texture.
+
+Create the hands for both players.
+	- Hand
+		x 3. Hand draws cards in a row.
+			x cleanup box.center_row/column
+		x Card added, row updates
+		x Create Opponent settings
+			x Smaller Cards
+			x Different Position
+
+Hide the opponent's hand.
+	- Card
+		x 4. Card flips
+		x Card flip copies card base...
+			x Positioning
+			x Sizing
+	- Hand
+		x May flip cards in iteration
+
+Next...
+Create an 'event' where the opponent reveals their hand.
+Test this event with networking.
+
+***
+0.0.9
+Added MySprite.box
+
 MySprite
 -
 	box
